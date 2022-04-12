@@ -41,15 +41,17 @@ app.use(flash())
 //routers list 
 
 let pagerouter=require('./router/page')
+let userrouter=require('./router/user')
+
 
 // connect to router
 
 app.use(pagerouter)
+app.use('/user',userrouter)
 
-
-const PORT=3000;
 
 // connect to mongo db
+const PORT=3000;
 async function dev(){
  try {
      await mongoose.connect('mongodb://127.0.0.1:27017/portal',{

@@ -1,17 +1,19 @@
 const {Router} =require('express')
-
 const router=Router()
+const auth=require('../middleware/auth')
+
 
 router.get('/',(req,res)=>{
-    res.render('index',{
-        isHome:true
+    res.render('front/index',{
+        title:'Foydalanuvchi Kabineti'
     })
 })
 
 
-router.get('/admin',async(req,res)=>{
-    res.render('dashboard',{
-        layout:'back'
+router.get('/admin',auth,async(req,res)=>{
+    res.render('back/dashboard',{
+        layout:'back',
+        title:'Admin Panel'
     })
 })
 

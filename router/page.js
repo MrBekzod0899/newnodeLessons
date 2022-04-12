@@ -9,4 +9,12 @@ router.get('/',(req,res)=>{
 })
 
 
+router.get('/admin',async(req,res)=>{
+    res.render('dashboard',{
+        layout:'back'
+    })
+})
+
+
+
 module.exports=router

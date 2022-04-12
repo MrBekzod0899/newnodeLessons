@@ -2,9 +2,13 @@ const express=require('express')
 const app= express()
 const mainHbs=require('express-handlebars')
 const mongoose=require('mongoose')
+const session=require('express-session')
+const flash=require('connect-flash')
+const csrf=require('csurf')
+
 
 const hbs=mainHbs.create({
-    defaultLayout:'main',
+    defaultLayout:'front',
     extname:'hbs'
 })
 
@@ -16,6 +20,21 @@ app.set('views','temp')
 app.use(express.urlencoded({extended:true}))  
 app.use(express.static('node_modules'))  //use static file as such as style.css 
 app.use(express.static('public'))
+app.use('/files',express.static('files'))
+
+//session
+
+app.use(session({
+    secret:'Maxfiy raqam',
+    saveUninitialized:false,
+    cookie:{
+        maxAge:1000*60*60*10,
+        secure:false
+    },
+    resave:true
+}))
+app.use(csrf())
+app.use(flash())
 
 
 
@@ -23,16 +42,14 @@ app.use(express.static('public'))
 
 let pagerouter=require('./router/page')
 
-
-
-//routers list 
+// connect to router
 
 app.use(pagerouter)
-app.use('/files',express.static('files'))
+
 
 const PORT=3000;
 
-
+// connect to mongo db
 async function dev(){
  try {
      await mongoose.connect('mongodb://127.0.0.1:27017/portal',{

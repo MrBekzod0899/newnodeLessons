@@ -1,11 +1,23 @@
-<form>
+<form action="/user/login" method="post">
+ 
   <div class="form-group">
     <input
-      type="email"
+      type="hidden"
       class="form-control"
-      id="email"
+      id="token"
+      name="_csrf"
+      value="{{csrf}}"
       aria-describedby="emailHelp"
-      placeholder="Enter email"
+    />
+  </div>
+   <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      id="login"
+      name="login"
+      aria-describedby="login"
+      placeholder="Enter your Login"
     />
   </div>
   <div class="form-group">
@@ -13,15 +25,16 @@
       type="password"
       class="form-control"
       id="password"
+      name="password"
       placeholder="Password"
     />
   </div>
   <button type="submit" class="btn btn-primary btn-block btn-submit">Sign In</button>
-  <div class="auth-options">
-    <div class="custom-control custom-checkbox form-group">
+  <div class="auth-options mr-0">
+    <div class="custom-control custom-checkbox form-group ml-0">
       <input type="checkbox" class="custom-control-input" id="exampleCheck1" />
       <label class="custom-control-label" for="exampleCheck1">Remember me</label>
     </div>
-    <a href="#" class="forgot-link">Forgot Password?</a>
+    <a href="/user/register" class="forgot-link mr-0">Accountingiz yo'qmi</a>
   </div>
 </form>

@@ -5,7 +5,7 @@ const mongoose=require('mongoose')
 const session=require('express-session')
 const flash=require('connect-flash')
 const csrf=require('csurf')
-
+const varMid=require('./middleware/var')
 
 const hbs=mainHbs.create({
     defaultLayout:'front',
@@ -22,6 +22,7 @@ app.use(express.static('node_modules'))  //use static file as such as style.css
 app.use(express.static('public'))
 app.use('/files',express.static('files'))
 
+
 //session
 
 app.use(session({
@@ -35,6 +36,8 @@ app.use(session({
 }))
 app.use(csrf())
 app.use(flash())
+app.use(varMid)
+
 
 
 
@@ -42,12 +45,14 @@ app.use(flash())
 
 let pagerouter=require('./router/page')
 let userrouter=require('./router/user')
+let categoryRouter=require('./router/category')
 
 
 // connect to router
 
 app.use(pagerouter)
 app.use('/user',userrouter)
+app.use('/category',categoryRouter)
 
 
 // connect to mongo db

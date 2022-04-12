@@ -1,6 +1,11 @@
-const {Schema,model}=require('express')
+const {Schema,model}=require('mongoose')
 
 const user=new Schema({
+    email:{
+        type:String,
+        required:true,
+        unique:true
+    },
     login:{
         type:String,
         required:true,
@@ -16,7 +21,6 @@ const user=new Schema({
     },
     img:String,
     logAt:[Date]
-
 })
 
 

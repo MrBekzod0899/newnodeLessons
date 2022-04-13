@@ -1,1 +1,77 @@
-<h1>New Category</h1>
+<div class="row">
+    <div class="col-xl">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5>Bo'limlar sahifasi</h5>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Yangi Bo'lim
+                    </button>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">status</th>
+                            <th scope="col">menu</th>
+                            <th scope="col">footer</th>
+                            <th scope="col">order</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each categories}}
+                        <tr>
+                            <th scope="row">{{@index}}</th>
+                            <td>{{title}}</td>
+                            <td>{{status}}</td>
+                            <td>{{menu}}</td>
+                            <td>{{footer}}</td>
+                            <td>{{order}}</td>
+                            <td></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input name="_crsf" value="{{csrf}}" />
+                        <input type="text" name="title" class="form-control" id="title" 
+                            placeholder="Enter title">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <div class="custom-control custom-checkbox form-group">
+                        <input type="checkbox" class="custom-control-input" id="exampleCheck1">
+                        <label class="custom-control-label" for="exampleCheck1">Check me out</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,6 +13,8 @@ router.get('/',(req,res)=>{
 router.get('/admin',auth,async(req,res)=>{
     res.render('back/dashboard',{
         layout:'back',
+        isHome:true,
+        text:'Bosh sahifa',
         title:'Admin Panel'
     })
 })

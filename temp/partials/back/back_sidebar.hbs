@@ -12,17 +12,17 @@
         Apps
       </li>
       <li {{#if isHome}} class="active-page" {{/if}}>
-        <a href="/admin" class="active"><i
+        <a href="/admin" {{#if isHome}} class="active" {{/if}}><i
             class="material-icons-outlined"
           >dashboard</i>Bosh sahifa</a>
       </li>
       <li {{#if isCategory}} class="active-page" {{/if}} >
-        <a href="/category"><i
+        <a href="/category" {{#if isCategory}} class="active" {{/if}} ><i
             class="material-icons-outlined"
           >inbox</i>Bo'limlar</a>
       </li>
-      <li>
-        <a href="/category"><i
+      <li {{#if isProfile}} class="active-page" {{/if}} >
+        <a href="/profile" {{#if isProfile}} class="active" {{/if}} ><i
             class="material-icons-outlined"
           >account_circle</i>Profile</a>
       </li>

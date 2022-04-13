@@ -3,7 +3,6 @@ const User=require('../model/user')
 const router=Router()
 const bcrypt=require('bcryptjs')
 
-
 router.get('/',async(req,res)=>{
     res.render('back/user/user',{
         layout:'back',

@@ -6,6 +6,7 @@ const session=require('express-session')
 const flash=require('connect-flash')
 const csrf=require('csurf')
 const varMid=require('./middleware/var')
+const MongoStore=require('connect-mongodb-session')(session)
 
 const hbs=mainHbs.create({
     defaultLayout:'front',
@@ -24,7 +25,11 @@ app.use('/files',express.static('files'))
 
 
 //session
-
+const mongoURI='mongodb://127.0.0.1:27017/portal'
+const store=MongoStore({
+    collection:'session',
+    uri:mongoURI
+})
 app.use(session({
     secret:'Maxfiy raqam',
     saveUninitialized:false,
@@ -32,7 +37,8 @@ app.use(session({
         maxAge:1000*60*60*10,
         secure:false
     },
-    resave:true
+    resave:true,
+    store
 }))
 app.use(csrf())
 app.use(flash())
@@ -46,6 +52,7 @@ app.use(varMid)
 let pagerouter=require('./router/page')
 let userrouter=require('./router/user')
 let categoryRouter=require('./router/category')
+let profileRouter=require('./router/profile')
 
 
 // connect to router
@@ -53,13 +60,14 @@ let categoryRouter=require('./router/category')
 app.use(pagerouter)
 app.use('/user',userrouter)
 app.use('/category',categoryRouter)
+app.use('/profile',profileRouter)
 
 
 // connect to mongo db
 const PORT=3000;
 async function dev(){
  try {
-     await mongoose.connect('mongodb://127.0.0.1:27017/portal',{
+     await mongoose.connect(mongoURI,{
          useNewUrlParser:true
      })
      app.listen(PORT,()=>{

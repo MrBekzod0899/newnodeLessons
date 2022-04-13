@@ -8,7 +8,8 @@ router.get('/',auth,async(req,res)=>{
     res.render('back/category/category',{
         layout:'back',
         isCategory:true,
-        categories
+        categories,
+        text:"Bo'limlar"
     })
 })
 

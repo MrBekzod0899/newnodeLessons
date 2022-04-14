@@ -53,6 +53,7 @@ let pagerouter=require('./router/page')
 let userrouter=require('./router/user')
 let categoryRouter=require('./router/category')
 let profileRouter=require('./router/profile')
+let authorRouter=require('./router/author')
 
 
 // connect to router
@@ -61,6 +62,7 @@ app.use(pagerouter)
 app.use('/user',userrouter)
 app.use('/category',categoryRouter)
 app.use('/profile',profileRouter)
+app.use('/author',authorRouter)
 
 
 // connect to mongo db

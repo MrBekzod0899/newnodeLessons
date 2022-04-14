@@ -1,0 +1,136 @@
+<div class="row">
+    <div class="col-xl">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5>Mualliflar sahifasi</h5>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Yangi Yozuvchilar
+                    </button>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">name</th>
+                            <th scope="col">avatar</th>
+                            <th scope="col">status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each authors}}
+                        <tr>
+                            <th scope="row">{{@index}}</th>
+                            <td>{{name}}</td>
+                            <td><img src='/{{avatar}}' width="70" alt="no-images" /></td>
+                            <td style="cursor: pointer;">
+                                <a href="/author/status/{{_id}}">{{{status}}}</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-warning" href="/author/get/{{_id}}" data-toggle="modal"
+                                    data-target="#editModal" onclick="edit('{{_id}}')"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-danger" href="/author/delete/{{_id}}"
+                                    onclick="return confirm('Qaroringiz aniqmi??')"><i class="fas fa-times"></i></a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Yangi Muallif</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/author?_csrf={{csrf}}" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="hidden" id="csrf" name="_csrf" value="{{csrf}}" />
+                        <input type="text" name="name" class="form-control" id="name"
+                            placeholder="Muallif ism familiyasi " />
+                    </div>
+                    <div class="form-group">
+                        <input type="file" class="form-control" id="avatar" name="avatar"
+                            placeholder="rasmingizni yuklang" />
+                    </div>
+                    <div class="custom-control custom-checkbox form-group">
+                        <input type="checkbox" class="custom-control-input" id="Status" value="1" name="status"
+                            checked />
+                        <label class="custom-control-label" for="Status">status</label>
+                    </div>
+                    <div class="modal-footer pr-0">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Bekor qilish</button>
+                        <button type="submit" class="btn btn-primary">Saqlash</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Muallif ma'lumotini tahrirlash</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/author/save?_csrf={{csrf}}" name="editForm" enctype="multipart/form-data" method="post">
+                    <div class="form-group">
+                        <input type="hidden" id="csrf" name="_csrf" value="{{csrf}}" />
+                        <input type="hidden" id="id" name="_id" />
+                        <input type="text" name="name" class="form-control" id="name"
+                            placeholder="Muallif ismi familiyasi" />
+                    </div>
+                    <div class="form-group">
+                        <input type="file" class="form-control" id="avatar" name="avatar"
+                            placeholder="muallif rasmi" />
+                    </div>
+                    <div class="form-group">
+                        <img width="100" height="100" src="" id="AuthorImg"/>
+                    </div>
+
+                    <div class="modal-footer pr-0">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Bekor qilish</button>
+                        <button type="submit" class="btn btn-primary">Saqlash</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let editform = document.forms.editForm
+
+    function edit(id) {
+        console.log(id)
+        let AuthorImg=document.getElementById('AuthorImg')
+        fetch(`author/get/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                editform.name.value = data.name
+                editform._id.value=data._id
+                if(data.avatar){
+                    AuthorImg.setAttribute('src',`/${data.avatar}`)
+                }
+            })
+    }
+</script>

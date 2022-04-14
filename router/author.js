@@ -55,7 +55,6 @@ router.get('/status/:id',async(req,res)=>{
     if(AuthorStatus.status !==1){
         status=1
     }
-   
     await Author.findByIdAndUpdate(_id,{status})
     res.redirect('/author')
 })

@@ -55,7 +55,7 @@
                             </td>
                             <td>
                                 <a class="btn btn-warning" href="/news/get/{{_id}}" data-toggle="modal"
-                                    data-target="#editModal" onclick="edit('{{_id}}')"><i class="fas fa-edit"></i></a>
+                                    data-target="#editModal" onclick="editElement('{{_id}}')"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-danger" href="/news/delete/{{_id}}"
                                     onclick="return confirm('Qaroringiz aniqmi??')"><i class="fas fa-times"></i></a>
                             </td>
@@ -185,32 +185,70 @@
     </div>
 </div>
 
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal bd-example-modal-lg mymodal fade" id="editModal" tabindex="-1"  role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Muallif ma'lumotini
-                    tahrirlash</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Yangi Muallif</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="material-icons">close</i>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/author/save?_csrf={{csrf}}" name="editForm" enctype="multipart/form-data" method="post">
-                    <div class="form-group">
-                        <input type="hidden" id="csrf" name="_csrf" value="{{csrf}}" />
-                        <input type="hidden" id="id" name="_id" />
-                        <input type="text" name="name" class="form-control" id="name"
-                            placeholder="Muallif ismi familiyasi" />
+                <form action="/save?_csrf={{csrf}}" method="post" name="editForm" enctype="multipart/form-data">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <input type="hidden" id="csrf" name="_csrf" value="{{csrf}}" />
+                                    <input type="hidden" id="_id" name="_id" />
+                                    <label for="title">Maqola sarlavhasi</label>
+                                    <input type="text" name="title" class="form-control" id="title"
+                                        placeholder="Maqola sarlavhasini kiriting" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Maqolani qisqacha tasnifi</label>
+                                    <input type="text" name="description" class="form-control" id="description"
+                                        placeholder="Maqola qisqacha tasnifi" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Maqolani to'liq tasnifi</label>
+                                    <textarea type="text" name="context" class="form-control" id="context"
+                                        placeholder="Maqola to'liq tasnifi"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="author">Maqolani kim tomonidan tayyorlandi</label>
+                                    <select name="author" id="author" class="form-control p-0 m-0 pt-2 pb-2 pl-2" >
+                                        {{#each authors}}
+                                             <option value="{{_id}}">{{name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Maqola bo'limini tanlang</label>
+                                    <select name="category" id="category" class="form-control p-0 m-0 pt-2 pb-2 pl-2" >
+                                        {{#each categories}}
+                                             <option value="{{_id}}">{{title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hashList">Teglar ro'yxati(vergul bilan ajrating)</label>
+                                    <input type="text" name="hashList" class="form-control" id="hashList"
+                                        placeholder="Teglar ro'yxatini kiriting" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="Image">Maqola rasmi</label>
+                                    <input type="file" name="Image" class="form-control" id="Image"
+                                        placeholder="Maqola kim tomonidan tayyorlandi" />
+                                </div>
+                                <div class="imageForm"  class="form-group">
+                                        <img id="imageForm" width="70"/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="file" class="form-control" id="avatar" name="avatar" placeholder="muallif rasmi" />
-                    </div>
-                    <div class="form-group">
-                        <img width="100" height="100" src="" id="AuthorImg" />
-                    </div>
-
                     <div class="modal-footer pr-0">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Bekor qilish</button>
                         <button type="submit" class="btn btn-primary">Saqlash</button>
@@ -224,20 +262,25 @@
 <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('context')
-
     let editform = document.forms.editForm
+    console.log(editform)
 
-    function edit(id) {
+    function editElement(id) {
         console.log(id)
-        AuthorImg = document.getElementById('AuthorImg')
-        fetch(`author/get/${id}`)
+        let imageForm=document.getElementById('imageForm')
+        fetch(`/news/get/${id}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                editform.name.value = data.name
-                editform._id.value = data._id
-                if (data.avatar) {
-                    AuthorImg.setAttribute('src', `/${data.avatar}`)
+                editform.title.value=data.title
+                editform._id.value=data._id
+                editform.category.value=data.category._id
+                editform.author.value=data.author._id
+                editform.description.value=data.description
+                editform.context.value=data.context
+                editform.hashList.value=data.hashList
+                if(data.Image){
+                    imageForm.setAttribute('src',`/${data.Image}`)
                 }
             })
     }

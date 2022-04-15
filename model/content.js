@@ -4,7 +4,7 @@ const content=new Schema({
     description:String,
     context:String,
     cretedAt:{
-        type:String,
+        type:Date,
         default:Date.now()
     },
     author:{

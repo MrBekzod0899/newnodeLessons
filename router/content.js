@@ -53,7 +53,6 @@ router.post('/',upload.single('Image'),auth,async(req,res)=>{
 })
 
 router.get('/delete/:id',auth,async(req,res)=>{
-    
     let _id=req.params.id
     await Content.findByIdAndRemove({_id})
     res.redirect('/news')
@@ -62,9 +61,7 @@ router.get('/delete/:id',auth,async(req,res)=>{
 router.get('/show/:id',async(req,res)=>{
     let _id=req.params.id
     console.log(_id)
-    let content=await Content.findOne({_id}).populate('author').populate('category').lean()
-
-    
+    let content=await Content.findOne({_id}).populate('author').populate('category').lean() 
         content.status=content.status==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
         content.hot=content.hot==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
         content.topweek=content.topweek==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
@@ -73,8 +70,6 @@ router.get('/show/:id',async(req,res)=>{
         content.slider=content.slider==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
         content.bigPopular=content.bigPopular==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
 
-    console.log(content)
-    // let contents=await Content.findOne({_id}).lean()
     res.render('back/content/show',{
         isNews:true,
         layout:'back',
@@ -85,18 +80,19 @@ router.get('/show/:id',async(req,res)=>{
 
 router.get('/get/:id',auth,async(req,res)=>{
     let _id=req.params.id
-    let editContent=await Content.findOne({_id}).lean()
+    let editContent=await Content.findOne({_id}).populate('author').populate('category').lean()
     console.log(_id,editContent)
     res.send(editContent)
 })
 
-router.post('/save',auth,async(req,res)=>{
+router.post('/save',auth,upload.single('Image'),async(req,res)=>{
     console.log(req.body)
-    let {title,order,status,footer,menu,_id}=req.body
-    status=status==1 ? status :0
-    menu=menu==1 ? menu :0
-    footer= footer==1 ? footer :0
-    await  Content.findByIdAndUpdate(_id,{title,order,status,menu,footer})
+    let {title,description,context,author,category,hashList}=req.body
+    let Image='no photo'
+    if(req.file){
+         Image=req.file.path
+    }
+    await  Content.findByIdAndUpdate(_id,{title,description,context,author,category,hashList,Image})
     res.redirect('/news')
 })
 

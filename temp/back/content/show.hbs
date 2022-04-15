@@ -8,27 +8,11 @@
                     {{content.description}}
                 </p>
             </div>
-            <div class="card-footer">
-                <h5>Maqolani holatiwehjjhkdsjhfhj</h5>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between" ><span>Status:</span><a href="/status/{{_id}}">{{{content.status}}}</a></li>
-                    <li class="list-group-item d-flex justify-content-between"><span>Slider:</span><a href="/slider/{{_id}}">{{{content.slider}}}</a></li>
-                    <li class="list-group-item d-flex justify-content-between"><span>Top:</span><a href="/top/{{_id}}">{{{content.top}}}</a></li>
-                    <li class="list-group-item d-flex justify-content-between"><span>Hot:</span><a href="/hot/{{_id}}">{{{content.hot}}}</a></li>
-                    <li class="list-group-item d-flex justify-content-between"><span>Popular:</span><a href="/popular/{{_id}}">{{{content.popular}}}</a></li>
-                    <li class="list-group-item d-flex justify-content-between"><span>Big popular:</span><a href="/bigPopular/{{_id}}">{{{content.bigPopular}}}</a></li>
-                    <li class="list-group-item d-flex justify-content-between"><span>Top Week:</span><a href="/topweek/{{_id}}">{{{content.topweek}}}</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-4">
-        <div class="card">
+            <div class="card">
             <div class="card-body">
                 <h5 class="card-title">{{content.title}}</h5>
-                <p class="card-text">
+                <p class="card-text" style="width: 100%; overflow:hidden" >
                     {{{content.context}}}
-
                     <a href="#" class="card-link">
                         {{content.hashList}}
                     </a>
@@ -43,5 +27,21 @@
                 </div>
             </div>
         </div>
+            
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="card-footer">
+                <h5>Maqolani holati</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between" ><span>Status:</span><a href="/news/status/{{content._id}}">{{{content.status}}}</a></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Slider:</span><a href="/news/slider/{{content._id}}">{{{content.slider}}}</a></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Top:</span><a href="/news/top/{{content._id}}">{{{content.top}}}</a></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Hot:</span><a href="/news/hot/{{content._id}}">{{{content.hot}}}</a></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Popular:</span><a href="/news/popular/{{content._id}}">{{{content.popular}}}</a></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Big popular:</span><a href="/news/bigPopular/{{content._id}}">{{{content.bigPopular}}}</a></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Top Week:</span><a href="/news/topweek/{{content._id}}">{{{content.topweek}}}</a></li>
+                </ul>
+            </div>
     </div>
 </div>

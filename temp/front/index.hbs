@@ -13,7 +13,7 @@
           <div class="infoline_date">{{cretedAt}}</div>
           <span class="dash"></span>
           <div class="infoline_author">
-            <div class="ava"><img data-src="/{{author.avatar}}" src="/{{author.avatar}}"
+            <div class="ava"><img  data-src="/{{author.avatar}}" src="/{{author.avatar}}"
                 class="js-img" alt="avatar" />
             </div>
             {{author.name}}
@@ -27,7 +27,6 @@
 </div>
 <section class="section-stories">
   <div class="wrapper">
-    <a href="#" class="bann"><img src="/front/img/bad3.jpg" alt="" /></a>
     <div id="recent" class="recent_wrap">
       <div class="section_title">
         <h2>Recent stories</h2>
@@ -35,119 +34,49 @@
       <div class="columns">
         <div class="columns_center">
           <div class="recent">
+            {{#each recentStories}}
             <div class="recent_item">
               <div class="recent_item_img">
-                <a href="article.html"><img data-src="/front/img/img14.jpg"
-                    src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="" /></a>
-                <div class="recent_item_cats cats"><a href="blog.html" class="cats_item">home</a></div>
+                <a href="/news/show/{{_id}}"><img data-src="/{{Image}}"
+                    src="/{{Image}}" class="js-img" alt="" /></a>
+                <div class="recent_item_cats cats"><a href="/news/show/{{_id}}" class="cats_item">{{category.title}}</a></div>
               </div>
               <div class="recent_item_cont">
-                <div class="recent_item_title h3"><a href="article.html">selection of very comfortable furniture for
-                    relaxing on the
-                    terrace</a></div>
-                <div class="recent_item_txt">A breakdown or a flat tire can
-                  happen to anyone at any time, and what you have in your car
-                  can make the difference between getting back on the ...</div>
+                <div class="recent_item_title h3"><a href="/news/show/{{_id}}">{{title}}</a></div>
+                <div class="recent_item_txt">{{description}}</div>
                 <div class="recent_item_infoline infoline">
-                  <div class="infoline_date">Jul 06, 2021</div>
+                  <div class="infoline_date">{{cretedAt}}</div>
                   <span class="dash"></span>
                   <div class="infoline_author">
-                    <div class="ava"><img data-src="/front/img/ava7.png"
-                        src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="" /></div>
-                    Marie Caphlish
+                    <div class="ava"><img data-src="{{author.avatar}}"
+                        src="{{author.avatar}}" class="js-img" alt="" /></div>
+                      {{author.name}}
                   </div>
                   <a href="article.html" class="btn-arr"><span class="icon-arrow"></span></a>
                 </div>
               </div>
             </div>
-            <div class="recent_item">
-              <div class="recent_item_img">
-                <a href="article.html"><img data-src="/front/img/img15.jpg"
-                    src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="" /></a>
-                <div class="recent_item_cats cats"><a href="blog.html" class="cats_item">fashion</a></div>
-              </div>
-              <div class="recent_item_cont">
-                <div class="recent_item_title h3"><a href="article.html">modern
-                    style for young fashionistas spring autumn</a></div>
-                <div class="recent_item_txt">A breakdown or a flat tire can
-                  happen to anyone at any time, and what you have in your car
-                  can make the difference between getting back on the ...</div>
-                <div class="recent_item_infoline infoline">
-                  <div class="infoline_date">Jul 06, 2021</div>
-                  <span class="dash"></span>
-                  <div class="infoline_author">
-                    <div class="ava"><img data-src="/front/img/ava.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                        class="js-img" alt="" /></div>
-                    Marie Caphlish
-                  </div>
-                  <a href="article.html" class="btn-arr"><span class="icon-arrow"></span></a>
-                </div>
-              </div>
-            </div>
-            <div class="recent_item">
-              <div class="recent_item_img">
-                <a href="article.html"><img data-src="/front/img/img16.jpg"
-                    src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="" /></a>
-                <div class="recent_item_cats cats"><a href="blog.html" class="cats_item">electronics</a></div>
-              </div>
-              <div class="recent_item_cont">
-                <div class="recent_item_title h3"><a href="article.html">are you
-                    ready to try new things in electronics this year</a></div>
-                <div class="recent_item_txt">A breakdown or a flat tire can
-                  happen to anyone at any time, and what you have in your car
-                  can make the difference between getting back on the ...</div>
-                <div class="recent_item_infoline infoline">
-                  <div class="infoline_date">Jul 06, 2021</div>
-                  <span class="dash"></span>
-                  <div class="infoline_author">
-                    <div class="ava"><img data-src="/front/img/ava.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                        class="js-img" alt="" /></div>
-                    Marie Caphlish
-                  </div>
-                  <a href="article.html" class="btn-arr"><span class="icon-arrow"></span></a>
-                </div>
-              </div>
-            </div>
+            {{/each}}
           </div>
         </div>
         <aside class="columns_sidebar sidebar">
           <div class="sidebar_widget">
             <div class="stories">
-              <div class="stories_item">
-                <div class="stories_item_img"><a href="article.html"><img data-src="/front/img/img2.jpg"
-                      src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="" /></a></div>
-                <div class="stories_infoline infoline">
-                  <div class="infoline_date">Jul 06, 2021</div>
-                  <span class="dash"></span>
-                  <div class="infoline_tag">#pets</div>
+              {{#each otherNews}}
+
+                <div class="stories_item">
+                  <div class="stories_item_img"><a href="/news/show/{{_id}}"><img data-src="/{{Image}}"
+                        src="/{{Image}}" class="js-img img-fluid" alt="no-image" /></a></div>
+                  <div class="stories_infoline infoline d-flex justify-content-between flex-row">
+                    <div class="infoline_date">{{cretedAt}}</div><br/>
+                    <span class="ml-2">{{author.name}}</span>
+                    <div class="infoline_tag">#{{category.title}}</div>
+                  </div>
+                  <div class="stories_item_title"><a href="/news/show/{{_id}}">{{title}}</a></div>
                 </div>
-                <div class="stories_item_title"><a href="article.html">fresh
-                    home photo session. see how we love our pets</a></div>
-              </div>
-              <div class="stories_item">
-                <div class="stories_item_img"><a href="article.html"><img data-src="/front/img/img3.jpg"
-                      src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="" /></a></div>
-                <div class="stories_infoline infoline">
-                  <div class="infoline_date">Jul 06, 2021</div>
-                  <span class="dash"></span>
-                  <div class="infoline_tag">#garden</div>
-                </div>
-                <div class="stories_item_title"><a href="article.html">the best
-                    ideas for decorating living areas in your garden</a></div>
-              </div>
-              <div class="stories_item">
-                <div class="stories_item_img"><a href="article.html"><img data-src="/front/img/img17.jpg"
-                      src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="" /></a></div>
-                <div class="stories_infoline infoline">
-                  <div class="infoline_date">Jul 06, 2021</div>
-                  <span class="dash"></span>
-                  <div class="infoline_tag">#trevel</div>
-                </div>
-                <div class="stories_item_title"><a href="article.html">how not
-                    to get lost without knowing the language</a></div>
-              </div>
+              {{/each}}
             </div>
-            <div class="stories_btn"><a href="blog.html" class="btn">view all</a></div>
+            <div class="stories_btn"><a href="/news/all" class="btn">view all</a></div>
           </div>
         </aside>
       </div>

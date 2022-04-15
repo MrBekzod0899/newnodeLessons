@@ -1,0 +1,41 @@
+<section class="section-stories">
+    <div class="wrapper">
+        <div class="container">
+            {{#each allNews}}
+            <div class="row">
+                <div class="col-xl-8">
+                    <div class="card">
+                        <img src="/{{Image}}" class="card-img-top" alt="Placeholder">
+                        <div class="card-body">
+                            <h5 class="card-title">{{title}}</h5>
+                            <p class="card-text">
+                                {{description}}
+                            </p>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{title}}</h5>
+                                <p class="card-text" style="width: 100%; overflow:hidden">
+                                    {{{context}}}
+                                    <a href="#" class="card-link">
+                                        {{hashList}}
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="post-header d-flex align-items-center">
+                                    <img src="/{{author.avatar}}">
+                                    <div class="post-info">
+                                        <span class="post-author">{{author.name}}</span><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</section>

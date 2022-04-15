@@ -87,18 +87,27 @@ router.get('/get/:id',auth,async(req,res)=>{
 
 router.post('/save',auth,upload.single('Image'),async(req,res)=>{
     console.log(req.body)
-    let {title,description,context,author,category,hashList}=req.body
-    let Image='no photo'
-    if(req.file){
-         Image=req.file.path
+    let {_id,title,description,context,author,category,hashList}=req.body
+    let obj={
+        title,
+        description,
+        context,
+        author,
+        category,
+        hashList
     }
-    await  Content.findByIdAndUpdate(_id,{title,description,context,author,category,hashList,Image})
+    if(req.file){
+         obj.Image=req.file.path
+    }
+    await  Content.findByIdAndUpdate(_id,obj)
     res.redirect('/news')
 })
 
 router.get('/:type/:id',async(req,res)=>{
     let type=req.params.type
     let _id=req.params.id
+    console.log(type)
+    console.log(_id)
     console.log(_id,type)
     let content= await Content.findOne({_id})
     if(content[type]==1){
@@ -109,14 +118,26 @@ router.get('/:type/:id',async(req,res)=>{
     }
     console.log(content)
     await Content.findByIdAndUpdate(_id,content)
-    res.redirect('/news')
+    if(type===''){
+        res.redirect(`/news/${_id}`)
+    }
+    else{
+        res.redirect(`/news/show/${_id}`)
+    }
 })
 
 router.get('/all',async(req,res)=>{
-    let statusContent=await Content.find({status:1}).lean()
-    let footerContent=await Content.find({footer:1}).lean()
-    let menuContent=await Content.find({menu:1}).lean()
-    console.log(statusContent,menuContent)
-    res.send({statusContent,footerContent,menuContent})
+    let allNews=await Content.find().populate('author').populate('category').lean()
+    allNews= allNews.map(content=>{
+        let data =new Date(content.cretedAt.toLocaleString())
+         content.cretedAt=`${data.getDay()}/${data.getMonth()}/${data.getFullYear()}`
+         return content
+     })
+
+     console.log(allNews,'adfdsg')
+     res.render('front/all/all',{
+         layout:'front',
+         allNews
+     })
 })
 module.exports=router

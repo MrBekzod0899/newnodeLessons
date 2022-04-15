@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-xl-8">
+        <div class="card">
+            <img src="/{{content.Image}}" class="card-img-top" alt="Placeholder">
+            <div class="card-body">
+                <h5 class="card-title">{{content.title}}</h5>
+                <p class="card-text">
+                    {{content.description}}
+                </p>
+            </div>
+            <div class="card-footer">
+                <h5>Maqolani holatiwehjjhkdsjhfhj</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between" ><span>Status:</span><a href="/status/{{_id}}">{{{content.status}}}</a></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Slider:</span><a href="/slider/{{_id}}">{{{content.slider}}}</a></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Top:</span><a href="/top/{{_id}}">{{{content.top}}}</a></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Hot:</span><a href="/hot/{{_id}}">{{{content.hot}}}</a></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Popular:</span><a href="/popular/{{_id}}">{{{content.popular}}}</a></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Big popular:</span><a href="/bigPopular/{{_id}}">{{{content.bigPopular}}}</a></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Top Week:</span><a href="/topweek/{{_id}}">{{{content.topweek}}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{content.title}}</h5>
+                <p class="card-text">
+                    {{{content.context}}}
+
+                    <a href="#" class="card-link">
+                        {{content.hashList}}
+                    </a>
+                </p>
+            </div>
+            <div class="card-footer">
+                <div class="post-header d-flex align-items-center">
+                    <img src="/{{content.author.avatar}}">
+                    <div class="post-info">
+                        <span class="post-author">{{content.author.name}}</span><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -26,10 +26,8 @@
             class="material-icons-outlined"
           >account_circle</i>Profile</a>
       </li>
-      <li>
-        <a href="/category"><i
-            class="material-icons"
-          >cloud_queue</i>File Manager</a>
+      <li {{#if isNews}} class="active-page" {{/if}}>
+        <a href="/news"><i class="material-icons-outlined">article</i>News</a>
       </li>
       <li>
         <a href="/category"><i

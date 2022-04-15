@@ -1,0 +1,20 @@
+.newscontent{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.newscontent .col-xl .card .card-body{
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.mytable thead tr th{
+    padding: 10px 20px;
+}
+.mytable tbody tr td:last-child{
+    white-space: nowrap;
+}
+.mymodal input{
+    padding: 5px 10px;
+}

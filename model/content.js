@@ -16,6 +16,18 @@ const content=new Schema({
         ref:'Category'
     },
     Image:String,
+    status:{
+        type:Number,
+        default:0
+    },
+    slider:{
+        type:Number,
+        default:0
+    },
+    bigPopular:{
+        type:Number,
+        default:0
+    },
     hot:{
         type:Number,
         default:0
@@ -35,7 +47,11 @@ const content=new Schema({
     view:{
         type:Number,
         default:0
-    }
+    },
+    comments:{
+        type:String
+    },
+    hashList:String
 })
 
 module.exports=model('Content',content)

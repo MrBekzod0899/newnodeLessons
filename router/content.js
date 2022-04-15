@@ -4,49 +4,90 @@ const Author=require('../model/author')
 const Category=require('../model/category')
 const Content=require('../model/content')
 const auth=require('../middleware/auth')
+const upload =require('../middleware/file')
 
 router.get('/',auth,async(req,res)=>{
     let categories=await Category.find({status:1}).lean()
     let authors=await Author.find({status:1}).lean()
-    let contents= await Content.find().populate('categories').populate('authors').lean()
-
-    categories=categories.map(category=>{
-        category.status=category.status==1 ? '<span class="badge badge-success">Faol</span>' :'<span class="badge badge-danger">Faol emas</span>'
-        category.menu=category.menu==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
-        category.footer=category.footer==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
-        return category
+    let contents= await Content.find().populate('category').populate('author').lean()
+    contents=contents.map(content=>{
+        content.status=content.status==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+        content.hot=content.hot==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+        content.topweek=content.topweek==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+        content.top=content.top==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+        content.popular=content.popular==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+        content.slider=content.slider==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+        content.bigPopular=content.bigPopular==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+        return content
     })
-    
-    res.render('back/category/category',{
+    res.render('back/content/content',{
         layout:'back',
-        isCategory:true,
+        isNews:true,
+        contents,
+        authors,
         categories,
         text:"Bo'limlar"
     })
 })
 
-router.post('/',auth,async(req,res)=>{
+router.post('/',upload.single('Image'),auth,async(req,res)=>{
     console.log(req.body)
-    let {title,order,status,footer,menu}=req.body
-    status=status==1 ? status :0
-    menu=menu==1 ? menu :0
-    footer= footer==1 ? footer :0
-    let newCategory=await new Category({title,order,status,menu,footer})
-    newCategory.save()
-    res.redirect('/category')
+    let {title,description,context,author,category,status,hot,top,slider,bigPopular,topweek,popular,hashList}=req.body
+    let Image='no photo'
+    if(req.file){
+         Image=req.file.path
+    }
+    status= status==1 ? status :0
+    top= top==1 ? top :0
+    topweek= topweek==1 ? topweek :0
+    popular= popular==1 ? popular :0
+    hot= hot==1 ? hot :0
+    slider= slider==1 ? slider :0
+    bigPopular= bigPopular==1 ? bigPopular :0
+    let view=0
+    let comments=0
+    let cretedAt=Date.now()
+    let newContent=await new Content({title,description,context,author,category,Image,status,hot,top,topweek,popular,hashList,view,comments,cretedAt})
+    newContent.save()
+    res.redirect('/news')
 })
 
 router.get('/delete/:id',auth,async(req,res)=>{
+    
     let _id=req.params.id
-    await Category.findByIdAndRemove({_id})
-    res.redirect('/category')
+    await Content.findByIdAndRemove({_id})
+    res.redirect('/news')
+})
+
+router.get('/show/:id',async(req,res)=>{
+    let _id=req.params.id
+    console.log(_id)
+    let content=await Content.findOne({_id}).populate('author').populate('category').lean()
+
+    
+        content.status=content.status==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+        content.hot=content.hot==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+        content.topweek=content.topweek==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+        content.top=content.top==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+        content.popular=content.popular==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+        content.slider=content.slider==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+        content.bigPopular=content.bigPopular==1 ? '<span class="badge badge-success">Ha</span>' :'<span class="badge badge-danger">Yo`q</span>'
+
+    console.log(content)
+    // let contents=await Content.findOne({_id}).lean()
+    res.render('back/content/show',{
+        isNews:true,
+        layout:'back',
+        content,
+        text:`news / show`
+    })
 })
 
 router.get('/get/:id',auth,async(req,res)=>{
     let _id=req.params.id
-    let editCategory=await Category.findOne({_id}).lean()
-    console.log(_id,editCategory)
-    res.send(editCategory)
+    let editContent=await Content.findOne({_id}).lean()
+    console.log(_id,editContent)
+    res.send(editContent)
 })
 
 router.post('/save',auth,async(req,res)=>{
@@ -55,31 +96,31 @@ router.post('/save',auth,async(req,res)=>{
     status=status==1 ? status :0
     menu=menu==1 ? menu :0
     footer= footer==1 ? footer :0
-    await  Category.findByIdAndUpdate(_id,{title,order,status,menu,footer})
-    res.redirect('/category')
+    await  Content.findByIdAndUpdate(_id,{title,order,status,menu,footer})
+    res.redirect('/news')
 })
 
 router.get('/:type/:id',async(req,res)=>{
     let type=req.params.type
     let _id=req.params.id
     console.log(_id,type)
-    let category= await Category.findOne({_id})
-    if(category[type]==1){
-        category[type]=0 
+    let content= await Content.findOne({_id})
+    if(content[type]==1){
+        content[type]=0 
     }
     else{
-        category[type]=1
+        content[type]=1
     }
-    console.log(category)
-    await Category.findByIdAndUpdate(_id,category)
-    res.redirect('/category')
+    console.log(content)
+    await Content.findByIdAndUpdate(_id,content)
+    res.redirect('/news')
 })
 
 router.get('/all',async(req,res)=>{
-    let statusCategory=await Category.find({status:1}).lean()
-    let footerCategory=await Category.find({footer:1}).lean()
-    let menuCategory=await Category.find({menu:1}).lean()
-    console.log(statusCategory,menuCategory)
-    res.send({statusCategory,footerCategory,menuCategory})
+    let statusContent=await Content.find({status:1}).lean()
+    let footerContent=await Content.find({footer:1}).lean()
+    let menuContent=await Content.find({menu:1}).lean()
+    console.log(statusContent,menuContent)
+    res.send({statusContent,footerContent,menuContent})
 })
 module.exports=router

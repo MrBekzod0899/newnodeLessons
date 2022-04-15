@@ -54,6 +54,7 @@ let userrouter=require('./router/user')
 let categoryRouter=require('./router/category')
 let profileRouter=require('./router/profile')
 let authorRouter=require('./router/author')
+let newsRouter=require('./router/content')
 
 
 // connect to router
@@ -63,6 +64,7 @@ app.use('/user',userrouter)
 app.use('/category',categoryRouter)
 app.use('/profile',profileRouter)
 app.use('/author',authorRouter)
+app.use('/news',newsRouter)
 
 
 // connect to mongo db

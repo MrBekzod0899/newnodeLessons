@@ -126,18 +126,5 @@ router.get('/:type/:id',async(req,res)=>{
     }
 })
 
-router.get('/all',async(req,res)=>{
-    let allNews=await Content.find().populate('author').populate('category').lean()
-    allNews= allNews.map(content=>{
-        let data =new Date(content.cretedAt.toLocaleString())
-         content.cretedAt=`${data.getDay()}/${data.getMonth()}/${data.getFullYear()}`
-         return content
-     })
 
-     console.log(allNews,'adfdsg')
-     res.render('front/all/all',{
-         layout:'front',
-         allNews
-     })
-})
 module.exports=router

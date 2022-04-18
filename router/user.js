@@ -29,6 +29,8 @@ router.get('/login',async(req,res)=>{
 router.post('/login',async(req,res)=>{
     let {login,password}=req.body
     console.log(req.body)
+    let nimadir=await User.find().lean()
+     console.log(nimadir)
     let checkUser= await User.findOne({login}).lean()
     if(checkUser){
         let comparePass=await bcrypt.compare(password,checkUser.password)
@@ -58,6 +60,8 @@ router.post('/login',async(req,res)=>{
         res.redirect('/user/login')
     }
 })
+
+
 router.get('/register',async(req,res)=>{
     res.render('back/user/register',{
         error:req.flash('error'),
